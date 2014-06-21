@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubocop/git'
+require 'rubocop/git/cli'
+
+RuboCop::Git::CLI.new.run
