@@ -7,7 +7,8 @@ class StyleGuide
 
   def violations(file)
     parsed_source = parse_source(file)
-    team = Rubocop::Cop::Team.new(Rubocop::Cop::Cop.all, configuration)
+    team = Rubocop::Cop::Team.new(
+             Rubocop::Cop::Cop.all, configuration, RuboCop::Git.options)
     commissioner = Rubocop::Cop::Commissioner.new(team.cops, [])
     commissioner.investigate(parsed_source)
   end

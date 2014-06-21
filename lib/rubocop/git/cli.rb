@@ -20,6 +20,11 @@ module RuboCop
             options[:config] = config
           end
 
+          opt.on('-D', '--display-cop-names',
+                 'Display cop names in offense messages') do
+            RuboCop::Git.options[:display_cop_names] = true
+          end
+
           opt.on('--cached', 'git diff --cached') do
             options[:cached] = true
           end

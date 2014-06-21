@@ -15,6 +15,7 @@ module RuboCop
     autoload :StyleChecker,      'rubocop/git/style_checker'
     autoload :StyleGuide,        'rubocop/git/style_guide'
 
-    mattr_accessor :config_path
+    mattr_accessor :config_path, :options
+    self.options = {}
   end
 end
