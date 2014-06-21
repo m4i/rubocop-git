@@ -1,6 +1,6 @@
-require "rubocop/git/version"
+require 'rubocop/git/version'
 
-module Rubocop
+module RuboCop
   module Git
     # Your code goes here...
   end
