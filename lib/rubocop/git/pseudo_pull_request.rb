@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module RuboCop
   module Git
     # ref. https://github.com/thoughtbot/hound/blob/a6a8d3f/app/models/pull_request.rb
@@ -17,7 +19,7 @@ module RuboCop
 
       def file_contents(filename)
         if @options[:cached]
-          `git show ':#{filename}'`
+          `git show :#{filename.shellescape}`
         else
           File.read(filename)
         end
