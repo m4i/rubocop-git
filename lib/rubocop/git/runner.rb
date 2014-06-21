@@ -35,7 +35,7 @@ module RuboCop
 
       def git_diff(cached)
         if cached
-          `git diff --cached --diff-filter=AM`
+          `git diff --diff-filter=AMCR --cached --find-renames --find-copies`
         else
           `git diff --diff-filter=AM`
         end
@@ -47,9 +47,10 @@ module RuboCop
 
         diff.each_line do |line|
           case line
-          when %r{^diff --git a/(.*) b/\1$}
-            files << PseudoResource.new($1, 'modified', '')
+          when /^diff --git/
             in_patch = false
+          when %r{^\+{3} b/([^\t\n\r]+)}
+            files << PseudoResource.new($1, 'modified', '')
           when /^@@/
             in_patch = true
           end
