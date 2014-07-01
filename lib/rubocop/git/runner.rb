@@ -1,6 +1,6 @@
 module RuboCop
   module Git
-    # ref. https://github.com/thoughtbot/hound/blob/a6a8d3f/app/services/build_runner.rb
+    # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/services/build_runner.rb
     class Runner
       DEFAULT_CONFIG_FILE = '.rubocop.yml'
       HOUND_DEFAULT_CONFIG_FILE =
@@ -21,12 +21,7 @@ module RuboCop
       end
 
       def style_checker
-        StyleChecker.new(modified_files, pull_request.config)
-      end
-
-      def modified_files
-        collection = FileCollection.new(pull_request.pull_request_files)
-        collection.relevant_files
+        StyleChecker.new(pull_request.pull_request_files, pull_request.config)
       end
 
       def pull_request

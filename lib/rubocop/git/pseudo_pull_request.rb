@@ -2,7 +2,7 @@ require 'shellwords'
 
 module RuboCop
   module Git
-    # ref. https://github.com/thoughtbot/hound/blob/a6a8d3f/app/models/pull_request.rb
+    # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/pull_request.rb
     class PseudoPullRequest
       HOUND_CONFIG_FILE = '.hound.yml'
 
@@ -13,15 +13,7 @@ module RuboCop
 
       def pull_request_files
         @files.map do |file|
-          ModifiedFile.new(file, self)
-        end
-      end
-
-      def file_contents(filename)
-        if @options[:cached]
-          `git show :#{filename.shellescape}`
-        else
-          File.read(filename)
+          build_commit_file(file)
         end
       end
 
@@ -30,6 +22,20 @@ module RuboCop
         File.read(HOUND_CONFIG_FILE)
       rescue Errno::ENOENT
         nil
+      end
+
+      private
+
+      def build_commit_file(file)
+        CommitFile.new(file, file_contents(file.filename))
+      end
+
+      def file_contents(filename)
+        if @options[:cached]
+          `git show :#{filename.shellescape}`
+        else
+          File.read(filename)
+        end
       end
     end
   end

@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - db/schema.rb
+
 AccessorMethodName:
   Enabled: false
 
@@ -165,6 +169,9 @@ SignalException:
 
 SpecialGlobalVars:
   Enabled: false
+
+StringLiterals:
+  EnforcedStyle: double_quotes
 
 VariableInterpolation:
   Enabled: false

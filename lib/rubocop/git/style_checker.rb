@@ -1,5 +1,5 @@
 module RuboCop::Git
-# ref. https://github.com/thoughtbot/hound/blob/a6a8d3f/app/models/style_checker.rb
+# ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/style_checker.rb
 class StyleChecker
   def initialize(modified_files, custom_config = nil)
     @modified_files = modified_files

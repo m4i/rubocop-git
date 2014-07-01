@@ -1,19 +1,29 @@
 module RuboCop::Git
-# ref. https://github.com/thoughtbot/hound/blob/a6a8d3f/app/models/style_guide.rb
+# ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/style_guide.rb
 class StyleGuide
   def initialize(override_config_content = nil)
     @override_config_content = override_config_content
   end
 
   def violations(file)
-    parsed_source = parse_source(file)
-    team = Rubocop::Cop::Team.new(
-             Rubocop::Cop::Cop.all, configuration, RuboCop::Git.options)
-    commissioner = Rubocop::Cop::Commissioner.new(team.cops, [])
-    commissioner.investigate(parsed_source)
+    if ignored_file?(file)
+      []
+    else
+      parsed_source = parse_source(file)
+      team = Rubocop::Cop::Team.new(
+               Rubocop::Cop::Cop.all, configuration, RuboCop::Git.options)
+      commissioner = Rubocop::Cop::Commissioner.new(team.cops, [])
+      commissioner.investigate(parsed_source)
+    end
   end
 
   private
+
+  def ignored_file?(file)
+    !file.ruby? ||
+      file.removed? ||
+        configuration.file_to_exclude?(file.filename)
+  end
 
   def parse_source(file)
     Rubocop::SourceParser.parse(file.contents, file.filename)
@@ -28,6 +38,7 @@ class StyleGuide
         Rubocop::ConfigLoader.merge(config, override_config),
         ''
       )
+      config.make_excludes_absolute
     end
 
     config
