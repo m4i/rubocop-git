@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['m.ishihara@gmail.com']
   spec.summary       = %q{RuboCop for git diff.}
   spec.description   = %q{RuboCop for git diff.}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/m4i/rubocop-git'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
