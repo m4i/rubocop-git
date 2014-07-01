@@ -7,6 +7,11 @@ module RuboCop
         File.expand_path('../../../../hound.yml', __FILE__)
 
       def run(options)
+        if options[:hound] && RuboCop::Version.version != '0.22.0'
+          warn 'Hound compatibility mode require rubocop 0.22.0'
+          exit 1
+        end
+
         @options = options
         @files = parse_diff(git_diff(options[:cached]))
 
@@ -67,7 +72,7 @@ module RuboCop
       end
 
       def display_violations(io)
-        formatter = Rubocop::Formatter::ClangStyleFormatter.new(io)
+        formatter = RuboCop::Formatter::ClangStyleFormatter.new(io)
         formatter.started(nil)
 
         violations.map do |violation|

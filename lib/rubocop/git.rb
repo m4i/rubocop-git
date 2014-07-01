@@ -1,6 +1,14 @@
 require 'rubocop/git/version'
 require 'rubocop'
 
+if defined?(Rubocop)
+  # rubocop 0.22.0
+  RuboCop::Formatter = Rubocop::Formatter
+else
+  # rubocop >= 0.23.0
+  Rubocop = RuboCop
+end
+
 module RuboCop
   module Git
     autoload :CommitFile,        'rubocop/git/commit_file'

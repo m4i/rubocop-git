@@ -34,7 +34,8 @@ module RuboCop
             options[:cached] = true
           end
 
-          opt.on('--hound', 'Hound compatibility mode') do
+          opt.on('--hound',
+                 'Hound compatibility mode (require rubocop 0.22.0)') do
             options[:hound] = true
           end
 

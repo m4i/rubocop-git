@@ -23,7 +23,7 @@ Or install it yourself as:
         -D, --display-cop-names          Display cop names in offense messages
             --cached                     git diff --cached
             --staged                     synonym of --cached
-            --hound                      Hound compatibility mode
+            --hound                      Hound compatibility mode (require rubocop 0.22.0)
 
 ## Contributing
 
