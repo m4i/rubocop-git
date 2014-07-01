@@ -1,7 +1,8 @@
 module RuboCop::Git
 # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/style_guide.rb
 class StyleGuide
-  def initialize(override_config_content = nil)
+  def initialize(config_path, override_config_content = nil)
+    @config_path = config_path
     @override_config_content = override_config_content
   end
 
@@ -30,8 +31,7 @@ class StyleGuide
   end
 
   def configuration
-    config = Rubocop::ConfigLoader
-               .configuration_from_file(RuboCop::Git.config_path)
+    config = Rubocop::ConfigLoader.configuration_from_file(@config_path)
 
     if override_config
       config = Rubocop::Config.new(

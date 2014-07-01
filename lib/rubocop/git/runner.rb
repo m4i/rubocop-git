@@ -10,7 +10,6 @@ module RuboCop
         @options = options
         @files = parse_diff(git_diff(options[:cached]))
 
-        set_config_path(options[:config], options[:hound])
         display_violations($stdout)
       end
 
@@ -21,7 +20,9 @@ module RuboCop
       end
 
       def style_checker
-        StyleChecker.new(pull_request.pull_request_files, pull_request.config)
+        StyleChecker.new(pull_request.pull_request_files,
+                         config_path,
+                         pull_request.config)
       end
 
       def pull_request
@@ -56,13 +57,12 @@ module RuboCop
         files
       end
 
-      def set_config_path(config, hound)
-        RuboCop::Git.config_path =
-          if hound
-            HOUND_DEFAULT_CONFIG_FILE
-          else
-            config || DEFAULT_CONFIG_FILE
-          end
+      def config_path
+        if @options[:hound]
+          HOUND_DEFAULT_CONFIG_FILE
+        else
+          @options[:config] || DEFAULT_CONFIG_FILE
+        end
       end
 
       def display_violations(io)
