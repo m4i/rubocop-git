@@ -21,6 +21,7 @@ module RuboCop
 
       def style_checker
         StyleChecker.new(pull_request.pull_request_files,
+                         @options[:rubocop],
                          config_path,
                          pull_request.config)
       end

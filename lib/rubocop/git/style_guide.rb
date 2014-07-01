@@ -1,7 +1,8 @@
 module RuboCop::Git
 # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/style_guide.rb
 class StyleGuide
-  def initialize(config_path, override_config_content = nil)
+  def initialize(rubocop_options, config_path, override_config_content = nil)
+    @rubocop_options = rubocop_options
     @config_path = config_path
     @override_config_content = override_config_content
   end
@@ -12,7 +13,7 @@ class StyleGuide
     else
       parsed_source = parse_source(file)
       team = Rubocop::Cop::Team.new(
-               Rubocop::Cop::Cop.all, configuration, RuboCop::Git.options)
+               Rubocop::Cop::Cop.all, configuration, @rubocop_options)
       commissioner = Rubocop::Cop::Commissioner.new(team.cops, [])
       commissioner.investigate(parsed_source)
     end

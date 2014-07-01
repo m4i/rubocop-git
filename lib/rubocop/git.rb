@@ -1,6 +1,5 @@
 require 'rubocop/git/version'
 require 'rubocop'
-require 'active_support/core_ext/module/attribute_accessors'
 
 module RuboCop
   module Git
@@ -13,8 +12,5 @@ module RuboCop
     autoload :Runner,            'rubocop/git/runner'
     autoload :StyleChecker,      'rubocop/git/style_checker'
     autoload :StyleGuide,        'rubocop/git/style_guide'
-
-    mattr_accessor :options
-    self.options = {}
   end
 end
