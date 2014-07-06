@@ -18,7 +18,7 @@ module RuboCop
       end
 
       def config
-        return unless @options[:hound]
+        return unless @options.hound
         File.read(HOUND_CONFIG_FILE)
       rescue Errno::ENOENT
         nil
@@ -31,7 +31,7 @@ module RuboCop
       end
 
       def file_contents(filename)
-        if @options[:cached]
+        if @options.cached
           `git show :#{filename.shellescape}`
         else
           File.read(filename)

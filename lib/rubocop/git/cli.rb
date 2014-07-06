@@ -5,44 +5,47 @@ module RuboCop
   module Git
     class CLI
       def run(args = ARGV)
-        options = parse_arguments(args)
-        Runner.new.run(options)
+        @options = Options.new
+        parse_arguments(args)
+        Runner.new.run(@options)
       end
 
       private
 
       def parse_arguments(args)
-        options = {}
+        option_parser.parse(args)
+      rescue OptionParser::InvalidOption, Options::Invalid => ex
+        warn "ERROR: #{ex.message}"
+        $stderr.puts
+        warn option_parser
+        exit 1
+      end
 
-        OptionParser.new do |opt|
+      def option_parser
+        @option_parser ||= OptionParser.new do |opt|
           opt.on('-c', '--config FILE',
                  'Specify configuration file') do |config|
-            options[:config] = config
+            @options.config = config
           end
 
           opt.on('-D', '--display-cop-names',
                  'Display cop names in offense messages') do
-            options[:rubocop] ||= {}
-            options[:rubocop][:display_cop_names] = true
+            @options.rubocop[:display_cop_names] = true
           end
 
           opt.on('--cached', 'git diff --cached') do
-            options[:cached] = true
+            @options.cached = true
           end
 
           opt.on('--staged', 'synonym of --cached') do
-            options[:cached] = true
+            @options.cached = true
           end
 
           opt.on('--hound',
                  'Hound compatibility mode (require rubocop 0.22.0)') do
-            options[:hound] = true
+            @options.hound = true
           end
-
-          opt.parse(args)
         end
-
-        options
       end
     end
   end

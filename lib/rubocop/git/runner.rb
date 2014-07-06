@@ -2,18 +2,11 @@ module RuboCop
   module Git
     # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/services/build_runner.rb
     class Runner
-      DEFAULT_CONFIG_FILE = '.rubocop.yml'
-      HOUND_DEFAULT_CONFIG_FILE =
-        File.expand_path('../../../../hound.yml', __FILE__)
-
       def run(options)
-        if options[:hound] && RuboCop::Version.version != '0.22.0'
-          warn 'Hound compatibility mode require rubocop 0.22.0'
-          exit 1
-        end
+        options = Options.new(options) unless options.is_a?(Options)
 
         @options = options
-        @files = parse_diff(git_diff(options[:cached]))
+        @files = parse_diff(git_diff(options))
 
         display_violations($stdout)
       end
@@ -26,8 +19,8 @@ module RuboCop
 
       def style_checker
         StyleChecker.new(pull_request.pull_request_files,
-                         @options[:rubocop],
-                         config_path,
+                         @options.rubocop,
+                         @options.config_path,
                          pull_request.config)
       end
 
@@ -35,12 +28,14 @@ module RuboCop
         @pull_request ||= PseudoPullRequest.new(@files, @options)
       end
 
-      def git_diff(cached)
-        if cached
-          `git diff --diff-filter=AMCR --cached --find-renames --find-copies`
-        else
-          `git diff --diff-filter=AM`
+      def git_diff(options)
+        args = %w(diff --diff-filter=AMCR --find-renames --find-copies)
+
+        if options.cached
+          args << '--cached'
         end
+
+        `git #{args.join(' ')}`
       end
 
       def parse_diff(diff)
@@ -61,14 +56,6 @@ module RuboCop
         end
 
         files
-      end
-
-      def config_path
-        if @options[:hound]
-          HOUND_DEFAULT_CONFIG_FILE
-        else
-          @options[:config] || DEFAULT_CONFIG_FILE
-        end
       end
 
       def display_violations(io)
