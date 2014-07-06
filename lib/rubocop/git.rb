@@ -3,8 +3,9 @@ require 'rubocop'
 
 if defined?(Rubocop)
   # rubocop 0.22.0
-  RuboCop::Formatter = Rubocop::Formatter
-  RuboCop::Version   = Rubocop::Version
+  RuboCop::ConfigLoader = Rubocop::ConfigLoader
+  RuboCop::Formatter    = Rubocop::Formatter
+  RuboCop::Version      = Rubocop::Version
 else
   # rubocop >= 0.23.0
   Rubocop = RuboCop

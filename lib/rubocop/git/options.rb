@@ -3,7 +3,6 @@ module RuboCop
     class Options
       class Invalid < StandardError; end
 
-      DEFAULT_CONFIG_FILE = '.rubocop.yml'
       HOUND_DEFAULT_CONFIG_FILE =
         File.expand_path('../../../../hound.yml', __FILE__)
 
@@ -11,7 +10,7 @@ module RuboCop
       attr_reader   :cached, :hound, :rubocop
 
       def initialize(hash_options = nil)
-        @config  = DEFAULT_CONFIG_FILE
+        @config  = nil
         @cached  = false
         @hound   = false
         @rubocop = {}
@@ -52,7 +51,15 @@ module RuboCop
       end
 
       def config_path
-        hound ? HOUND_DEFAULT_CONFIG_FILE : config
+        if hound
+          HOUND_DEFAULT_CONFIG_FILE
+        elsif config
+          config
+        elsif File.exist?(RuboCop::ConfigLoader::DOTFILE)
+          RuboCop::ConfigLoader::DOTFILE
+        else
+          RuboCop::ConfigLoader::DEFAULT_FILE
+        end
       end
 
       def commit_first
