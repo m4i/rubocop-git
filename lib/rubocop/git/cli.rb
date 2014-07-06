@@ -13,7 +13,7 @@ module RuboCop
       private
 
       def parse_arguments(args)
-        option_parser.parse(args)
+        @options.commits = option_parser.parse(args)
       rescue OptionParser::InvalidOption, Options::Invalid => ex
         warn "ERROR: #{ex.message}"
         $stderr.puts
@@ -23,6 +23,8 @@ module RuboCop
 
       def option_parser
         @option_parser ||= OptionParser.new do |opt|
+          opt.banner << ' [[commit] commit]'
+
           opt.on('-c', '--config FILE',
                  'Specify configuration file') do |config|
             @options.config = config

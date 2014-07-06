@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-    Usage: rubocop-git [options]
+    Usage: rubocop-git [options] [[commit] commit]
         -c, --config FILE                Specify configuration file
         -D, --display-cop-names          Display cop names in offense messages
             --cached                     git diff --cached

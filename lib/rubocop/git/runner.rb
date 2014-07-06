@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module RuboCop
   module Git
     # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/services/build_runner.rb
@@ -33,6 +35,9 @@ module RuboCop
 
         if options.cached
           args << '--cached'
+        elsif options.commit_last
+          args << options.commit_first.shellescape
+          args << options.commit_last.shellescape
         end
 
         `git #{args.join(' ')}`

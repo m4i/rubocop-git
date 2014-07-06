@@ -33,6 +33,8 @@ module RuboCop
       def file_contents(filename)
         if @options.cached
           `git show :#{filename.shellescape}`
+        elsif @options.commit_last
+          `git show #{@options.commit_last.shellescape}:#{filename.shellescape}`
         else
           File.read(filename)
         end
