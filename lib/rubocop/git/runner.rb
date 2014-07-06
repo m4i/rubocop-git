@@ -8,7 +8,7 @@ module RuboCop
         options = Options.new(options) unless options.is_a?(Options)
 
         @options = options
-        @files = parse_diff(git_diff(options))
+        @files = DiffParser.parse(git_diff(options))
 
         display_violations($stdout)
       end
@@ -41,26 +41,6 @@ module RuboCop
         end
 
         `git #{args.join(' ')}`
-      end
-
-      def parse_diff(diff)
-        files    = []
-        in_patch = false
-
-        diff.each_line do |line|
-          case line
-          when /^diff --git/
-            in_patch = false
-          when %r{^\+{3} b/([^\t\n\r]+)}
-            files << PseudoResource.new($1, 'modified', '')
-          when /^@@/
-            in_patch = true
-          end
-
-          files.last.patch << line if in_patch
-        end
-
-        files
       end
 
       def display_violations(io)

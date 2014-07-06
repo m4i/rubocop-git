@@ -13,6 +13,7 @@ end
 module RuboCop
   module Git
     autoload :CommitFile,        'rubocop/git/commit_file'
+    autoload :DiffParser,        'rubocop/git/diff_parser'
     autoload :FileViolation,     'rubocop/git/file_violation'
     autoload :Line,              'rubocop/git/line'
     autoload :Options,           'rubocop/git/options'
