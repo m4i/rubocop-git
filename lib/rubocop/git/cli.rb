@@ -30,6 +30,10 @@ module RuboCop
             @options.config = config
           end
 
+          opt.on('-d', '--debug', 'Display debug info') do
+            @options.rubocop[:debug] = true
+          end
+
           opt.on('-D', '--display-cop-names',
                  'Display cop names in offense messages') do
             @options.rubocop[:display_cop_names] = true

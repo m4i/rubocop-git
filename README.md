@@ -20,6 +20,7 @@ Or install it yourself as:
 
     Usage: rubocop-git [options] [[commit] commit]
         -c, --config FILE                Specify configuration file
+        -d, --debug                      Display debug info
         -D, --display-cop-names          Display cop names in offense messages
             --cached                     git diff --cached
             --staged                     synonym of --cached
