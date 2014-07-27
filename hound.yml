@@ -5,6 +5,9 @@ AllCops:
 AccessorMethodName:
   Enabled: false
 
+ActionFilter:
+  Enabled: false
+
 Alias:
   Enabled: false
 
@@ -27,6 +30,9 @@ CaseEquality:
   Enabled: false
 
 CharacterLiteral:
+  Enabled: false
+
+ClassAndModuleChildren:
   Enabled: false
 
 ClassLength:
@@ -66,6 +72,9 @@ DotPosition:
 DoubleNegation:
   Enabled: false
 
+EachWithObject:
+  Enabled: false
+
 EmptyLiteral:
   Enabled: false
 
@@ -85,6 +94,9 @@ FormatString:
   Enabled: false
 
 GlobalVars:
+  Enabled: false
+
+GuardClause:
   Enabled: false
 
 IfUnlessModifier:

@@ -2,7 +2,7 @@ require 'shellwords'
 
 module RuboCop
   module Git
-    # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/services/build_runner.rb
+    # ref. https://github.com/thoughtbot/hound/blob/d2f3933/app/services/build_runner.rb
     class Runner
       def run(options)
         options = Options.new(options) unless options.is_a?(Options)

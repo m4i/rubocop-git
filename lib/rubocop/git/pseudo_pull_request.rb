@@ -1,8 +1,6 @@
-require 'shellwords'
-
 module RuboCop
   module Git
-    # ref. https://github.com/thoughtbot/hound/blob/be2dd34/app/models/pull_request.rb
+    # ref. https://github.com/thoughtbot/hound/blob/d2f3933/app/models/pull_request.rb
     class PseudoPullRequest
       HOUND_CONFIG_FILE = '.hound.yml'
 
@@ -27,17 +25,11 @@ module RuboCop
       private
 
       def build_commit_file(file)
-        CommitFile.new(file, file_contents(file.filename))
+        CommitFile.new(file, head_commit)
       end
 
-      def file_contents(filename)
-        if @options.cached
-          `git show :#{filename.shellescape}`
-        elsif @options.commit_last
-          `git show #{@options.commit_last.shellescape}:#{filename.shellescape}`
-        else
-          File.read(filename)
-        end
+      def head_commit
+        @head_commit ||= Commit.new(@options)
       end
     end
   end

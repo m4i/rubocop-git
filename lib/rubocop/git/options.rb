@@ -27,9 +27,6 @@ module RuboCop
       end
 
       def hound=(hound_)
-        if hound_ && RuboCop::Version.version != '0.22.0'
-          fail Invalid, 'Hound compatibility mode requires rubocop 0.22.0'
-        end
         @hound = !!hound_
       end
 

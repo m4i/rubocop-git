@@ -1,18 +1,9 @@
 require 'rubocop/git/version'
 require 'rubocop'
 
-if defined?(Rubocop)
-  # rubocop 0.22.0
-  RuboCop::ConfigLoader = Rubocop::ConfigLoader
-  RuboCop::Formatter    = Rubocop::Formatter
-  RuboCop::Version      = Rubocop::Version
-else
-  # rubocop >= 0.23.0
-  Rubocop = RuboCop
-end
-
 module RuboCop
   module Git
+    autoload :Commit,            'rubocop/git/commit'
     autoload :CommitFile,        'rubocop/git/commit_file'
     autoload :DiffParser,        'rubocop/git/diff_parser'
     autoload :FileViolation,     'rubocop/git/file_violation'
