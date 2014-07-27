@@ -2,6 +2,9 @@
 
 RuboCop for git diff.
 
+[![Gem Version](https://badge.fury.io/rb/rubocop-git.svg)](http://badge.fury.io/rb/rubocop-git)
+[![Code Climate](https://codeclimate.com/github/m4i/rubocop-git.png)](https://codeclimate.com/github/m4i/rubocop-git)
+
 ## Installation
 
 Add this line to your application's Gemfile:
