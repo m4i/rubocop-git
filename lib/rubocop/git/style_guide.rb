@@ -1,9 +1,9 @@
 module RuboCop::Git
 # ref. https://github.com/thoughtbot/hound/blob/d2f3933/app/models/style_guide.rb
 class StyleGuide
-  def initialize(rubocop_options, config_path, override_config_content = nil)
+  def initialize(rubocop_options, config_file, override_config_content = nil)
     @rubocop_options = rubocop_options
-    @config_path = config_path
+    @config_file = config_file
     @override_config_content = override_config_content
   end
 
@@ -34,8 +34,7 @@ class StyleGuide
 
   def config
     if @config.nil?
-      config_file = @config_path
-      config = RuboCop::ConfigLoader.configuration_from_file(config_file)
+      config = RuboCop::ConfigLoader.configuration_from_file(@config_file)
       combined_config = RuboCop::ConfigLoader.merge(config, override_config)
       @config = RuboCop::Config.new(combined_config, "")
     end

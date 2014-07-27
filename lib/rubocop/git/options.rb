@@ -47,7 +47,7 @@ module RuboCop
         @commits = commits
       end
 
-      def config_path
+      def config_file
         if hound
           HOUND_DEFAULT_CONFIG_FILE
         elsif config

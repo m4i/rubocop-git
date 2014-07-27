@@ -3,11 +3,11 @@ module RuboCop::Git
 class StyleChecker
   def initialize(modified_files,
                  rubocop_options,
-                 config_path,
+                 config_file,
                  custom_config = nil)
     @modified_files = modified_files
     @rubocop_options = rubocop_options
-    @config_path = config_path
+    @config_file = config_file
     @custom_config = custom_config
   end
 
@@ -36,7 +36,7 @@ class StyleChecker
 
   def style_guide
     @style_guide ||= StyleGuide.new(@rubocop_options,
-                                    @config_path,
+                                    @config_file,
                                     @custom_config)
   end
 end

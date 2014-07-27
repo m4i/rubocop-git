@@ -22,7 +22,7 @@ module RuboCop
       def style_checker
         StyleChecker.new(pull_request.pull_request_files,
                          @options.rubocop,
-                         @options.config_path,
+                         @options.config_file,
                          pull_request.config)
       end
 
