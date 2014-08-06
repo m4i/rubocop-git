@@ -30,6 +30,11 @@ module RuboCop
             @options.config = config
           end
 
+          opt.on('-r', '--require FILE',
+                 'Require Ruby file') do |file|
+            require file
+          end
+
           opt.on('-d', '--debug', 'Display debug info') do
             @options.rubocop[:debug] = true
           end
