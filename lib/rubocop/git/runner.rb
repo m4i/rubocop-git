@@ -11,6 +11,8 @@ module RuboCop
         @files = DiffParser.parse(git_diff(options))
 
         display_violations($stdout)
+        
+        exit(1) if violations.any?
       end
 
       private
