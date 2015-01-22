@@ -8,10 +8,10 @@ module RuboCop
         options = Options.new(options) unless options.is_a?(Options)
 
         @options = options
-        @files = DiffParser.parse(git_diff(options))
+        @files = DiffParser.parse(git_diff)
 
         display_violations($stdout)
-        
+
         exit(1) if violations.any?
       end
 
@@ -32,17 +32,8 @@ module RuboCop
         @pull_request ||= PseudoPullRequest.new(@files, @options)
       end
 
-      def git_diff(options)
-        args = %w(diff --diff-filter=AMCR --find-renames --find-copies)
-
-        if options.cached
-          args << '--cached'
-        elsif options.commit_last
-          args << options.commit_first.shellescape
-          args << options.commit_last.shellescape
-        end
-
-        `git #{args.join(' ')}`
+      def git_diff
+        `git #{diff_args.join ' '}`
       end
 
       def display_violations(io)
@@ -57,6 +48,19 @@ module RuboCop
         end
 
         formatter.finished(@files.map(&:filename).freeze)
+      end
+
+      def diff_args
+        args = %w(diff --diff-filter=AMCR --find-renames --find-copies)
+
+        if @options.cached
+          args << '--cached'
+        elsif @options.commit_last
+          args << @options.commit_first.shellescape
+          args << @options.commit_last.shellescape
+        end
+
+        args.concat @options.paths
       end
     end
   end
