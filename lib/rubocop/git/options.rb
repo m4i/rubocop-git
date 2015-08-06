@@ -7,7 +7,7 @@ module RuboCop
         File.expand_path('../../../../hound.yml', __FILE__)
 
       attr_accessor :config
-      attr_reader   :cached, :hound, :rubocop
+      attr_reader   :cached, :hound, :rubocop, :paths
 
       def initialize(hash_options = nil)
         @config  = nil
@@ -15,6 +15,7 @@ module RuboCop
         @hound   = false
         @rubocop = {}
         @commits = []
+        @paths   = []
 
         from_hash(hash_options) if hash_options
       end
@@ -47,6 +48,13 @@ module RuboCop
         @commits = commits
       end
 
+      def paths=(path)
+        @paths = path.split ' '
+        @paths.unshift '--' if @paths.any?
+      rescue
+        fail Invalid, "invalid paths: #{paths.inspect}"
+      end
+
       def config_file
         if hound
           HOUND_DEFAULT_CONFIG_FILE
@@ -71,7 +79,7 @@ module RuboCop
 
       def from_hash(hash_options)
         hash_options = hash_options.dup
-        %w(config cached hound rubocop commits).each do |key|
+        %w(config cached hound rubocop commits paths).each do |key|
           public_send("#{key}=", hash_options.delete(key))
         end
         unless hash_options.empty?

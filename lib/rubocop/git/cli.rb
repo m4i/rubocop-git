@@ -44,6 +44,12 @@ module RuboCop
             @options.rubocop[:display_cop_names] = true
           end
 
+          opt.on('-p',
+                 '--paths PATHS',
+                 'Limit diff to the named path(s)') do |paths|
+            @options.paths = paths
+          end
+
           opt.on('--cached', 'git diff --cached') do
             @options.cached = true
           end
