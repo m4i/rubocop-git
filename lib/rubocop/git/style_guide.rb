@@ -29,7 +29,7 @@ class StyleGuide
   end
 
   def parse_source(file)
-    RuboCop::ProcessedSource.new(file.content)
+    RuboCop::ProcessedSource.new(file.content, file.filename)
   end
 
   def config
