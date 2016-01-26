@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+  - 2.3.0
+gemfile:
+  - gemfiles/0.24.gemfile
+  - gemfiles/0.25.gemfile
+  - gemfiles/0.26.gemfile
+  - gemfiles/0.27.gemfile
+  - gemfiles/0.28.gemfile
+  - gemfiles/0.29.gemfile
+  - gemfiles/0.30.gemfile
+  - gemfiles/0.31.gemfile
+  - gemfiles/0.32.gemfile
+  - gemfiles/0.33.gemfile
+  - gemfiles/0.34.gemfile
+  - gemfiles/0.35.gemfile
+before_install: gem install bundler -v 1.11.2
