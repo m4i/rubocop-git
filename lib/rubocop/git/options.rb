@@ -60,11 +60,11 @@ module RuboCop
       end
 
       def commit_first
-        @commits.length == 1 ? @commits.first + '^' : @commits.first
+        @commits.first
       end
 
       def commit_last
-        @commits.last
+        @commits.length == 1 ? false : @commits.last
       end
 
       private
