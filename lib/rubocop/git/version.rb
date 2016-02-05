@@ -1,5 +1,5 @@
 module RuboCop
   module Git
-    VERSION = '0.0.5'
+    VERSION = '0.0.6'
   end
 end
