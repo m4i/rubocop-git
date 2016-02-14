@@ -10,7 +10,7 @@ module RuboCop
         @options = options
         @files = DiffParser.parse(git_diff(options))
 
-        display_violations($stdout)
+        display_violations
 
         exit(1) if violations.any?
       end
@@ -42,8 +42,18 @@ module RuboCop
         `git #{args.join(' ')}`
       end
 
-      def display_violations(io)
-        formatter = RuboCop::Formatter::ClangStyleFormatter.new(io)
+      def formatter
+        @formatter ||= begin
+                         set = Formatter::FormatterSet.new(@options.rubocop)
+                         pairs = @options.rubocop[:formatters] || [['clang']]
+                         pairs.each do |formatter_key, output_path|
+                           set.add_formatter(formatter_key, output_path)
+                         end
+                         set
+                       end
+      end
+
+      def display_violations
         formatter.started(nil)
 
         violations.map do |violation|

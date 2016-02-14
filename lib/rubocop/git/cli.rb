@@ -44,6 +44,12 @@ module RuboCop
             @options.rubocop[:display_cop_names] = true
           end
 
+          opt.on('-f', '--format FORMATTER',
+                 'Choose an output formatter') do |key|
+            @options.rubocop[:formatters] ||= []
+            @options.rubocop[:formatters] << [key]
+          end
+
           opt.on('--cached', 'git diff --cached') do
             @options.cached = true
           end
