@@ -55,6 +55,11 @@ module RuboCop
           opt.on('--hound', 'Hound compatibility mode') do
             @options.hound = true
           end
+
+          opt.on('--version', 'Display version') do
+            puts RuboCop::Git::VERSION
+            exit 0
+          end
         end
       end
     end
