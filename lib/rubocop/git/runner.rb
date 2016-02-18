@@ -43,13 +43,15 @@ module RuboCop
       end
 
       def formatter
-        @formatter ||= begin
+        @formatter ||= if @options.rubocop && @options.rubocop[:formatters]
                          set = Formatter::FormatterSet.new(@options.rubocop)
-                         pairs = @options.rubocop[:formatters] || [['clang']]
+                         pairs = @options.rubocop[:formatters]
                          pairs.each do |formatter_key, output_path|
                            set.add_formatter(formatter_key, output_path)
                          end
                          set
+                       else
+                         RuboCop::Formatter::ClangStyleFormatter.new($stdout)
                        end
       end
 
