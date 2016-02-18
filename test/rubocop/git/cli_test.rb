@@ -12,6 +12,9 @@ describe RuboCop::Git::CLI do
 
   describe '--format' do
     it 'format clang' do
+      if RuboCop::Version::STRING < '0.36'
+        skip("--format not supported")
+      end
       out, _err = capture_io do
         RuboCop::Git::CLI.new.run(['--format', 'clang'])
       end
@@ -19,6 +22,9 @@ describe RuboCop::Git::CLI do
     end
 
     it 'fail with missing argument' do
+      if RuboCop::Version::STRING < '0.36'
+        skip("--format not supported")
+      end
       proc do
         _out, _err = capture_io do
           RuboCop::Git::CLI.new.run(['--format'])
@@ -27,6 +33,9 @@ describe RuboCop::Git::CLI do
     end
 
     it 'fail with RuntimeError' do
+      if RuboCop::Version::STRING < '0.36'
+        skip("--format not supported")
+      end
       proc do
         _out, _err = capture_io do
           RuboCop::Git::CLI.new.run(['--format', 'test'])
