@@ -25,6 +25,7 @@ Or install it yourself as:
     Usage: rubocop-git [options] [[commit] commit]
         -c, --config FILE                Specify configuration file
         -r, --require FILE               Require Ruby file
+        -a, --auto-correct,              Auto-correct offenses.
         -d, --debug                      Display debug info
         -D, --display-cop-names          Display cop names in offense messages
             --cached                     git diff --cached
