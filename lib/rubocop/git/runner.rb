@@ -52,15 +52,12 @@ module RuboCop
       def display_violations(io)
         formatter = RuboCop::Formatter::ClangStyleFormatter.new(io)
         formatter.started(nil)
-        #binding.pry
         violations.map do |violation|
-          #binding.pry
           formatter.file_finished(
             violation.filename,
             violation.offenses.compact.sort.freeze
           )
         end
-        #binding.pry
         formatter.finished(@files.map(&:filename).freeze)
       end
     end
