@@ -14,9 +14,7 @@ class RuboComment
   def add_comments
     @files.each do |file|
       patch_info = Patch.new(file.patch).additions_map
-      #create temp file for processing
       temp_file = Tempfile.new('temp')
-      #open file
       line_count = edited_line_count = current_patch = 0
       in_patch = false
       edit_locations = []
