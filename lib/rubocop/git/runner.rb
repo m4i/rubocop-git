@@ -9,8 +9,15 @@ module RuboCop
 
         @options = options
         @files = DiffParser.parse(git_diff(options))
+        rubo_comment = RuboComment.new(@files)
+
+        #adds comments to files and reparses diff after changes are made
+        rubo_comment.add_comments
+        @files = DiffParser.parse(git_diff(options))
 
         display_violations($stdout)
+        #removes comments after rubocop processing
+        rubo_comment.remove_comments
 
         exit(1) if violations.any?
       end
@@ -45,14 +52,15 @@ module RuboCop
       def display_violations(io)
         formatter = RuboCop::Formatter::ClangStyleFormatter.new(io)
         formatter.started(nil)
-
+        #binding.pry
         violations.map do |violation|
+          #binding.pry
           formatter.file_finished(
             violation.filename,
             violation.offenses.compact.sort.freeze
           )
         end
-
+        #binding.pry
         formatter.finished(@files.map(&:filename).freeze)
       end
     end
