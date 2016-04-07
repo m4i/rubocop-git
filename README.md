@@ -3,6 +3,7 @@
 RuboCop for git diff.
 
 [![Gem Version](https://badge.fury.io/rb/rubocop-git.svg)](http://badge.fury.io/rb/rubocop-git)
+[![Build Status](https://travis-ci.org/m4i/rubocop-git.svg?branch=master)](https://travis-ci.org/m4i/rubocop-git)
 [![Code Climate](https://codeclimate.com/github/m4i/rubocop-git.png)](https://codeclimate.com/github/m4i/rubocop-git)
 
 ## Installation

@@ -72,7 +72,8 @@ module RuboCop
       def from_hash(hash_options)
         hash_options = hash_options.dup
         %w(config cached hound rubocop commits).each do |key|
-          public_send("#{key}=", hash_options.delete(key))
+          value = hash_options.delete(key) || hash_options.delete(key.to_sym)
+          public_send("#{key}=", value)
         end
         unless hash_options.empty?
           fail Invalid, "invalid keys: #{hash_options.keys.join(' ')}"
