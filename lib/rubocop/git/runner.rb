@@ -1,5 +1,5 @@
 require 'shellwords'
-
+# waiting on this to get merged into the project: https://github.com/m4i/rubocop-git/pull/22/files
 module RuboCop
   module Git
     # ref. https://github.com/thoughtbot/hound/blob/d2f3933/app/services/build_runner.rb
@@ -47,9 +47,11 @@ module RuboCop
         formatter.started(nil)
 
         violations.map do |violation|
+          offenses = violation.offenses
+          offenses = offenses.reject(&:disabled?) if offenses.first.respond_to?(:disabled?)
           formatter.file_finished(
             violation.filename,
-            violation.offenses.compact.sort.freeze
+            offenses.compact.sort.freeze
           )
         end
 
