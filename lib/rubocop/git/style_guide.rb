@@ -12,13 +12,18 @@ class StyleGuide
       []
     else
       parsed_source = parse_source(file)
-      cops = RuboCop::Cop::Cop.all
-      team = RuboCop::Cop::Team.new(cops, config, rubocop_options)
+      team = RuboCop::Cop::Team.new(all_cops, config, rubocop_options)
       team.inspect_file(parsed_source)
     end
   end
 
   private
+
+  if Gem::Version.new(RuboCop::Version::STRING) >= Gem::Version.new('0.47.0')
+    def all_cops; RuboCop::Cop::Registry.new RuboCop::Cop::Cop.all; end
+  else
+    def all_cops; RuboCop::Cop::Cop.all; end
+  end
 
   def ignored_file?(file)
     !file.ruby? || file.removed? || excluded_file?(file)
