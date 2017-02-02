@@ -13,7 +13,7 @@ class StyleGuide
     else
       parsed_source = parse_source(file)
       cops = RuboCop::Cop::Cop.all
-      team = RuboCop::Cop::Team.new(cops, config, rubocop_options)
+      team = RuboCop::Cop::Team.new(RuboCop::Cop::Registry.new(cops), config, rubocop_options)
       team.inspect_file(parsed_source)
     end
   end

@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'appraisal'
 
-  spec.add_dependency 'rubocop', '>= 0.24.1'
+  spec.add_dependency 'rubocop', '>= 0.47.1'
 end
