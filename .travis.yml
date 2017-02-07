@@ -16,4 +16,14 @@ gemfile:
   - gemfiles/0.35.gemfile
   - gemfiles/0.36.gemfile
   - gemfiles/0.37.gemfile
+  - gemfiles/0.38.gemfile
+  - gemfiles/0.39.gemfile
+  - gemfiles/0.40.gemfile
+  - gemfiles/0.41.gemfile
+  - gemfiles/0.42.gemfile
+  - gemfiles/0.43.gemfile
+  - gemfiles/0.44.gemfile
+  - gemfiles/0.45.gemfile
+  - gemfiles/0.46.gemfile
+  - gemfiles/0.47.gemfile
 before_install: gem install bundler -v 1.11.2
