@@ -12,13 +12,18 @@ class StyleGuide
       []
     else
       parsed_source = parse_source(file)
-      cops = RuboCop::Cop::Cop.all
-      team = RuboCop::Cop::Team.new(cops, config, rubocop_options)
+      team = RuboCop::Cop::Team.new(all_cops, config, rubocop_options)
       team.inspect_file(parsed_source)
     end
   end
 
   private
+
+  if Gem::Version.new(RuboCop::Version::STRING) >= Gem::Version.new('0.47.0')
+    def all_cops; RuboCop::Cop::Registry.new RuboCop::Cop::Cop.all; end
+  else
+    def all_cops; RuboCop::Cop::Cop.all; end
+  end
 
   def ignored_file?(file)
     !file.ruby? || file.removed? || excluded_file?(file)
@@ -29,11 +34,15 @@ class StyleGuide
   end
 
   def parse_source(file)
-    if Gem::Version.new(RuboCop::Version::STRING) < Gem::Version.new('0.36.0')
+    rubocop_version = Gem::Version.new(RuboCop::Version::STRING)
+    if rubocop_version < Gem::Version.new('0.36.0')
       RuboCop::ProcessedSource.new(file.content, file.filename)
-    else
+    elsif rubocop_version < Gem::Version.new('0.41.0')
       RuboCop::ProcessedSource.new(file.content,
                                    target_ruby_version, file.filename)
+    else
+      RuboCop::ProcessedSource.new(file.content,
+                                   config.target_ruby_version, file.filename)
     end
   end
 
@@ -67,6 +76,10 @@ class StyleGuide
     end
   end
 
+  # TODO: DELETE ME when we drop support for 0.x releases of rubocop
+  #
+  # This method exists in RuboCop::Config now (or config in this class) so we
+  # should make use of that.
   def target_ruby_version
     @target ||= begin
       target = config['AllCops'] && config['AllCops']['TargetRubyVersion']
