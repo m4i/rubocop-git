@@ -23,6 +23,7 @@
   0.45.0
   0.46.0
   0.47.1
+  0.48.1
 ).each do |version|
   appraise version[/\d+\.\d+/] do
     gem 'rubocop', version

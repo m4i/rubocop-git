@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 2.1.10
-  - 2.4.0
+  - 2.4.1
 gemfile:
   - gemfiles/0.24.gemfile
   - gemfiles/0.25.gemfile
@@ -27,5 +27,6 @@ gemfile:
   - gemfiles/0.45.gemfile
   - gemfiles/0.46.gemfile
   - gemfiles/0.47.gemfile
+  - gemfiles/0.48.gemfile
 before_install:
   - gem update --system
