@@ -35,6 +35,10 @@ module RuboCop
             require file
           end
 
+          opt.on('-a', '--auto-correct', 'Auto-correct offenses.') do
+            @options.rubocop[:auto_correct] = true
+          end
+
           opt.on('-d', '--debug', 'Display debug info') do
             @options.rubocop[:debug] = true
           end

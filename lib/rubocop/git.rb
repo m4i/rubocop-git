@@ -1,5 +1,7 @@
 require 'rubocop/git/version'
 require 'rubocop'
+require 'tempfile'
+require 'fileutils'
 
 module RuboCop
   module Git
@@ -15,5 +17,6 @@ module RuboCop
     autoload :Runner,            'rubocop/git/runner'
     autoload :StyleChecker,      'rubocop/git/style_checker'
     autoload :StyleGuide,        'rubocop/git/style_guide'
+    autoload :RuboComment,       'rubocop/git/rubo_comment'
   end
 end
