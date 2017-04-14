@@ -12,7 +12,7 @@ module RuboCop
 
         display_violations($stdout)
 
-        exit(1) if violations.any?
+        exit(1) if violated?
       end
 
       private
@@ -56,6 +56,14 @@ module RuboCop
         end
 
         formatter.finished(@files.map(&:filename).freeze)
+      end
+
+      def violated?
+        violations.any? do |violation|
+          offenses = violation.offenses
+          offenses = offenses.reject(&:disabled?) if offenses.first.respond_to?(:disabled?)
+          offenses && offenses.length > 0
+        end
       end
     end
   end
