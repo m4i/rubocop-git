@@ -6,6 +6,10 @@ class CommitFile
     @commit = commit
   end
 
+  def absolute_path
+    @file.absolute_path
+  end
+
   def filename
     @file.filename
   end
