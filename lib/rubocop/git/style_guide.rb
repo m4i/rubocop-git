@@ -57,23 +57,17 @@ class StyleGuide
   end
 
   def rubocop_options
-    if config["ShowCopNames"]
-      { debug: true }
-    else
-      {}
-    end.merge(@rubocop_options)
+    return @rubocop_options unless config["ShowCopNames"]
+    { debug: true }.merge(@rubocop_options)
   end
 
   def override_config
-    if @override_config_content
-      config_content = YAML.load(@override_config_content)
-      override_config = RuboCop::Config.new(config_content, "")
-      override_config.add_missing_namespaces
-      override_config.make_excludes_absolute
-      override_config
-    else
-      {}
-    end
+    return {} unless @override_config_content
+    config_content = YAML.load(@override_config_content)
+    override_config = RuboCop::Config.new(config_content, "")
+    override_config.add_missing_namespaces
+    override_config.make_excludes_absolute
+    override_config
   end
 
   # TODO: DELETE ME when we drop support for 0.x releases of rubocop
