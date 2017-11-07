@@ -15,7 +15,7 @@ module RuboCop
           case line
           when /^diff --git/
             in_patch = false
-          when %r{^\+{3} b/(?<path>[^\t\n\r]+)}
+          when %r{^\+{3} [a-z]/(?<path>[^\t\n\r]+)}
             files << PseudoResource.new(Regexp.last_match[:path])
           when /^@@/
             in_patch = true
