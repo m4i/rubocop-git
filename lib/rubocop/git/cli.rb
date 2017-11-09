@@ -60,6 +60,10 @@ module RuboCop
             puts RuboCop::Git::VERSION
             exit 0
           end
+
+          opt.on('-a', '--auto-correct', 'Auto-correct offenses') do
+            @options.rubocop[:auto_correct] = true
+          end
         end
       end
     end
