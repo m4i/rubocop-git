@@ -33,7 +33,7 @@ module RuboCop
       end
 
       def git_diff(options)
-        args = %w(diff --diff-filter=AMCR --find-renames --find-copies)
+        args = %w(diff --diff-filter=AMCR --find-renames --find-copies --no-color)
 
         args << '--cached' if options.cached
         args << options.commit_first.shellescape if options.commit_first
