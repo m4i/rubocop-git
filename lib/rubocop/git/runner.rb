@@ -12,7 +12,7 @@ module RuboCop
 
         display_violations($stdout)
 
-        exit(1) if violations.any?
+        violations.empty?
       end
 
       private

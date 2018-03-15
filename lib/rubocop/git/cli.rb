@@ -7,7 +7,11 @@ module RuboCop
       def run(args = ARGV)
         @options = Options.new
         parse_arguments(args)
-        Runner.new.run(@options)
+        if Runner.new.run(@options)
+          exit
+        else
+          exit 1
+        end
       end
 
       private
