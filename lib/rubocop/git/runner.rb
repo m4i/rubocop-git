@@ -39,7 +39,7 @@ module RuboCop
         args << options.commit_first.shellescape if options.commit_first
         args << options.commit_last.shellescape if options.commit_last
 
-        `git #{args.join(' ')}`
+        `git #{args.join(' ')} -- '*.rb'`
       end
 
       def display_violations(io)
