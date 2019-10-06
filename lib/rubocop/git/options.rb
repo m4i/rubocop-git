@@ -7,12 +7,13 @@ module RuboCop
         File.expand_path('../../../../hound.yml', __FILE__)
 
       attr_accessor :config
-      attr_reader   :cached, :hound, :rubocop
+      attr_reader   :cached, :hound, :rubocop, :format
 
       def initialize(hash_options = nil)
         @config  = nil
         @cached  = false
         @hound   = false
+        @format = RuboCop::Formatter::ClangStyleFormatter
         @rubocop = {}
         @commits = []
 
@@ -45,6 +46,15 @@ module RuboCop
           fail Invalid, 'cached and commit cannot be specified together'
         end
         @commits = commits
+      end
+
+      def format=(format)
+        formatters =
+          RuboCop::Formatter::FormatterSet::BUILTIN_FORMATTERS_FOR_KEYS
+        formatter_key = formatters.keys.find do |key|
+          key.start_with?(format)
+        end
+        @format = formatters[formatter_key] if formatter_key
       end
 
       def config_file

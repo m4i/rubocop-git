@@ -56,6 +56,11 @@ module RuboCop
             @options.hound = true
           end
 
+          opt.on('-f', '--format FORMAT',
+                 'Choose an output formatter') do |format|
+            @options.format = format
+          end
+
           opt.on('--version', 'Display version') do
             puts RuboCop::Git::VERSION
             exit 0
