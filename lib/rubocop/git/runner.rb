@@ -12,7 +12,7 @@ module RuboCop
 
         display_violations($stdout)
 
-        exit(1) if violations.any?
+        exit(1) if violations_with_valid_offences.any?
       end
 
       private
@@ -21,11 +21,23 @@ module RuboCop
         @violations ||= style_checker.violations
       end
 
+      def violations_with_valid_offences
+        @violations_with_valid_offences ||= begin
+          violations.map do |violation|
+            offenses = violation.offenses
+            offenses = offenses.reject(&:disabled?) if offenses.first.respond_to?(:disabled?)
+            offenses.any? ? violation : nil
+          end.compact
+        end
+      end
+
       def style_checker
-        StyleChecker.new(pull_request.pull_request_files,
-                         @options.rubocop,
-                         @options.config_file,
-                         pull_request.config)
+        StyleChecker.new(
+          pull_request.pull_request_files,
+          @options.rubocop,
+          @options.config_file,
+          pull_request.config
+        )
       end
 
       def pull_request
